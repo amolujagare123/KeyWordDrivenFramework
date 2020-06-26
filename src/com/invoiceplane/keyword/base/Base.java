@@ -1,5 +1,6 @@
 package com.invoiceplane.keyword.base;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -19,10 +20,10 @@ public class Base {
     public WebDriver init_driver(String browserName)
     {
         if (browserName.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "Drivers/chromedriver.exe");
+           WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
         } else if (browserName.equalsIgnoreCase("firefox")) {
-            System.setProperty("webdriver.gecko.driver", "Drivers/geckodriver.exe");
+            WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         }
         return driver;
@@ -30,7 +31,7 @@ public class Base {
 
     public Properties init_properties() throws IOException {
         prop=new Properties();
-        FileInputStream ip = new FileInputStream("C:\\Users\\amol\\IdeaProjects\\KeyWordDrivenFramework\\Resources\\config.properties");
+        FileInputStream ip = new FileInputStream("C:\\Users\\PC\\IdeaProjects\\KeyWordDrivenFramework\\Resources\\config.properties");
         prop.load(ip);
         return prop;
       //  ResourceBundle rb = ResourceBundle.getBundle("config.properties");
