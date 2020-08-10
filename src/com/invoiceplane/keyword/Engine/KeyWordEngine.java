@@ -15,6 +15,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+import static com.invoiceplane.keyword.base.Base.getUrl;
+import static com.invoiceplane.keyword.base.Base.init_driver;
+
 public class KeyWordEngine {
 
     public WebDriver driver;
@@ -55,6 +58,7 @@ public class KeyWordEngine {
                                      //  sheet.getRow(i).getCell(0).getStringCellValue();
 
            String locatorColValue =  sheet.getRow(i+1).getCell(k+1).toString().trim();
+
             if(!locatorColValue.equalsIgnoreCase("NA")){
                 locatorName = locatorColValue.split("=")[0].trim();
                 locatorValue = locatorColValue.split("=")[1].trim();
@@ -66,22 +70,14 @@ public class KeyWordEngine {
             switch (action) // this switch case is for the actions where no locator is involved
             {
                 case "open browser" :
-                                    base = new Base();
-                                    prop = base.init_properties();
-                                    if(value.isEmpty() || value.equalsIgnoreCase("NA"))
-                                        driver = base.init_driver(prop.getProperty("browser"));
-                                    else
-                                        driver = base.init_driver(value);
+                                    driver = init_driver(value);
                                     break;
-                case "enter url" :
-                                    prop = base.init_properties();
-                                    if(value.isEmpty() || value.equalsIgnoreCase("NA"))
-                                       driver.get(prop.getProperty("url"));
-                                    else
-                                        driver.get(value);
+
+                case "enter url" : driver.get(getUrl());
+
                                     break;
-                case "quit" :
-                                    driver.close();
+
+                case "quit" :      driver.close();
                                     break;
 
                 default:break;

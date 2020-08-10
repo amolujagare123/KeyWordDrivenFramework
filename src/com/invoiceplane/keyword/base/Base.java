@@ -14,10 +14,10 @@ import java.util.ResourceBundle;
 //responsible for driver excution
 public class Base {
 
-    public WebDriver driver;
-    public Properties prop;
+    public static WebDriver driver;
+    public static Properties prop;
 
-    public WebDriver init_driver(String browserName)
+    public static WebDriver init_driver(String browserName)
     {
         if (browserName.equalsIgnoreCase("chrome")) {
            WebDriverManager.chromedriver().setup();
@@ -29,11 +29,16 @@ public class Base {
         return driver;
     }
 
-    public Properties init_properties() throws IOException {
+    public static Properties init_properties() throws IOException {
         prop=new Properties();
         FileInputStream ip = new FileInputStream("C:\\Users\\PC\\IdeaProjects\\KeyWordDrivenFramework\\Resources\\config.properties");
         prop.load(ip);
         return prop;
       //  ResourceBundle rb = ResourceBundle.getBundle("config.properties");
     }
-}
+
+    public static String getUrl() throws IOException {
+
+        return  init_properties().getProperty("url");
+    }
+ }
