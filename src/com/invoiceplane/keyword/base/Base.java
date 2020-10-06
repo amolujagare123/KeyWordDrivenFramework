@@ -29,7 +29,7 @@ public class Base {
         return driver;
     }
 
-    public static Properties init_properties() throws IOException {
+    /*public static Properties init_properties() throws IOException {
         prop=new Properties();
         FileInputStream ip = new FileInputStream("C:\\Users\\PC\\IdeaProjects\\KeyWordDrivenFramework\\Resources\\config.properties");
         prop.load(ip);
@@ -40,5 +40,5 @@ public class Base {
     public static String getUrl() throws IOException {
 
         return  init_properties().getProperty("url");
-    }
+    }*/
  }
