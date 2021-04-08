@@ -28,7 +28,7 @@ public class KeyWordEngine {
     public WebElement element;
 
 
-    public final String SENARIO_SHEET_PATH = "KeywordExcel\\Keywords.xlsx";
+    public final String SENARIO_SHEET_PATH="KeywordExcel\\Keywords1.xlsx";
 
     public void startExecution(String sheetName) throws IOException, InterruptedException {
 
@@ -38,14 +38,15 @@ public class KeyWordEngine {
         String locatorValue ="";*/
 
        XSSFWorkbook workbook = new XSSFWorkbook(file);
+
        XSSFSheet sheet = workbook.getSheet(sheetName);
 
        int rowCount = sheet.getPhysicalNumberOfRows();
 
 
-        int k=0;
+        int k=0; // column
 
-        for (int i=0;i<rowCount;i++)
+        for (int i=0;i<rowCount-1;i++)
         {
             String locatorName="";
             String locatorValue ="";
@@ -53,22 +54,33 @@ public class KeyWordEngine {
 
                                      //  sheet.getRow(i).getCell(0).getStringCellValue();
  // NA or locator=value
-           String locatorColValue =  sheet.getRow(i+1).getCell(k+1).toString().trim();
+
+             /*  XSSFRow row = sheet.getRow(i+1);
+                  XSSFCell cell = row.getCell(k+1);
+                  String locatorColVal = cell.toString().trim();
+             locatorColVal = sheet.getRow(i+1).getCell(k+1).toString().trim();
+
+ */
+
+            String locatorColValue =  sheet.getRow(i+1).getCell(k+1).toString().trim();
 
             if(!locatorColValue.equalsIgnoreCase("NA")){
                 locatorName = locatorColValue.split("=")[0].trim();
                 locatorValue = locatorColValue.split("=")[1].trim();
             }
 
+
+
+
             String action  = sheet.getRow(i+1).getCell(k+2).toString().trim();
             String value  = sheet.getRow(i+1).getCell(k+3).toString().trim();
-//----------------------------------------------------------
+//--------------------------------------------------------------------------------
             switch (action) // this switch case is for the actions where no locator is involved
             {
                 case "open browser" :
                                     driver = init_driver(value);
                                     break;
-                case "enter url" : driver.get(getUrl());
+                case "enter url" : driver.get(value);
                                     break;
 
                 case "quit" :      driver.close();
@@ -80,6 +92,7 @@ public class KeyWordEngine {
             {
                 case "id" :
                     element = driver.findElement(By.id(locatorValue));
+
                     if(action.equalsIgnoreCase("sendkeys"))
                         element.sendKeys(value);
                     else if(action.equalsIgnoreCase("click"))
@@ -92,13 +105,18 @@ public class KeyWordEngine {
 
                 case "name" :
                     element = driver.findElement(By.name(locatorValue));
+
                     if(action.equalsIgnoreCase("sendkeys"))
                         element.sendKeys(value);
                     else if(action.equalsIgnoreCase("click"))
-                    {element.click();
-                        Thread.sleep(4000);}
+                    {
+                        element.click();
+                        Thread.sleep(4000);
+                    }
                     //locatorName=null;
                     break;
+
+
 
                 case "linkText" :
                     element = driver.findElement(By.linkText(locatorValue));
