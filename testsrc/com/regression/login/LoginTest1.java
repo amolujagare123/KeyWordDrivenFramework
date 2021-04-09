@@ -7,13 +7,14 @@ import java.io.IOException;
 
 public class LoginTest1 {
 
-    KyWordEngineExpaning keywordEngine;
 
+
+    KyWordEngineExpaning engine ;
     @Test
     public void allLoginPageTest() throws IOException {
-        keywordEngine = new KyWordEngineExpaning();
 
-        keywordEngine.startExecution("login");
+        engine = new KyWordEngineExpaning();
+        engine.startExecution("login");
     }
 
 }

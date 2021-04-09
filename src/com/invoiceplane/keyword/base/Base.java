@@ -28,6 +28,8 @@ public class Base {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         }
+
+        driver.manage().window().maximize();
         return driver;
     }
 
